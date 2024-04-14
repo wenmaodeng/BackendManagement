@@ -22,7 +22,12 @@ namespace BackendManagement
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            IFreeSql freeSql = new FreeSql.FreeSqlBuilder()
+                .UseConnectionString(FreeSql.DataType.Sqlite, @"Data Source=BackendManagement.db")
+                .UseAutoSyncStructure(true)
+                .Build();
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowModel>();
+            containerRegistry.RegisterInstance(freeSql);
         }
 
         protected override void OnInitialized()

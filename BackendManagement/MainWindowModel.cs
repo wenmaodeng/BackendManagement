@@ -1,5 +1,6 @@
 ﻿using BackendManagement.Extensions;
 using BackendManagement.MessageEvent;
+using BackendManagement.Model;
 using BackendManagement.Services;
 using Prism.Commands;
 using Prism.Events;
@@ -40,10 +41,12 @@ namespace BackendManagement
 
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator aggregator;
-        public MainWindowModel(IRegionManager _regionManager, IEventAggregator _aggregator) 
+        private readonly IFreeSql freeSql;
+        public MainWindowModel(IRegionManager _regionManager, IEventAggregator _aggregator, IFreeSql _freeSql)
         {
             regionManager = _regionManager;
             aggregator = _aggregator;
+            freeSql = _freeSql;
             NavigateCommand = new DelegateCommand<string>(Navigate);
             WindowMaximizeCommand = new DelegateCommand(WindowMaximize);
             WindowMinimizeCommand=new DelegateCommand(WindowMinimize);
@@ -52,9 +55,12 @@ namespace BackendManagement
         }
         private void Navigate(string nameSpace)
         {
-            //if (obj == null || string.IsNullOrWhiteSpace(obj))
-            //    return;
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(nameSpace);
+            NavigationParameters keyValuePairs = new NavigationParameters
+            {
+                { typeof(IFreeSql).Name , freeSql }
+            };
+
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(nameSpace, keyValuePairs);
             IsLeftDrawerOpen = false;
         }
         private void WindowMaximize()

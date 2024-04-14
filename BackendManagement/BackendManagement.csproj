@@ -6,9 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FreeSql" Version="3.2.821" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.821" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
@@ -16,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BackendManagement.BusinessView\BackendManagement.BusinessView.csproj" />
     <ProjectReference Include="..\BackendManagement.CommonView\BackendManagement.CommonView.csproj" />
+    <ProjectReference Include="..\BackendManagement.Model\BackendManagement.Model.csproj" />
   </ItemGroup>
 
 </Project>

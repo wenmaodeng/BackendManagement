@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FreeSql.DataAnnotations;
 
 namespace BackendManagement.Model
 {
@@ -11,5 +7,8 @@ namespace BackendManagement.Model
     /// </summary>
     public class SystemRole
     {
+        [Column(IsIdentity = true, IsPrimary = true)]
+        public int SystemRoleId { get; set; }
+        public string RoleName { get; set; }=string.Empty;
     }
 }
