@@ -19,6 +19,15 @@ namespace BackendManagement
         public MainWindow()
         {
             InitializeComponent();
+            colorZone.MouseMove += ColorZone_MouseMove;
+        }
+
+        private void ColorZone_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.LeftButton== MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }
