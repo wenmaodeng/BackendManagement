@@ -8,14 +8,27 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="720"
     AllowsTransparency="True"
     Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.Resources>
+        <sys:Double x:Key="packIconSize">20</sys:Double>
+        <Style x:Key="packIconStyle" TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="{StaticResource packIconSize}" />
+            <Setter Property="Height" Value="{StaticResource packIconSize}" />
+            <Setter Property="Margin" Value="4,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="DockPanel.Dock" Value="Right" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,15 +44,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DockPanel>
-                <materialDesign:PackIcon
-                    Width="25"
-                    Height="25"
-                    Margin="3,0"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    DockPanel.Dock="Right"
-                    Foreground="White"
-                    Kind="WindowClose">
+                <materialDesign:PackIcon Kind="WindowClose" Style="{StaticResource packIconStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding WindowCloseCommand}" />
@@ -47,30 +52,14 @@
                     </i:Interaction.Triggers>
                 </materialDesign:PackIcon>
 
-                <materialDesign:PackIcon
-                    Width="25"
-                    Height="25"
-                    Margin="3,0"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    DockPanel.Dock="Right"
-                    Foreground="White"
-                    Kind="WindowMaximize">
+                <materialDesign:PackIcon Kind="WindowMaximize" Style="{StaticResource packIconStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding WindowMaximizeCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </materialDesign:PackIcon>
-                <materialDesign:PackIcon
-                    Width="25"
-                    Height="25"
-                    Margin="3,0"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    DockPanel.Dock="Right"
-                    Foreground="White"
-                    Kind="WindowMinimize">
+                <materialDesign:PackIcon Kind="WindowMinimize" Style="{StaticResource packIconStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding WindowMinimizeCommand}" />
@@ -78,7 +67,29 @@
                     </i:Interaction.Triggers>
                 </materialDesign:PackIcon>
                 <StackPanel Orientation="Horizontal">
-                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                    <ToggleButton
+                        x:Name="MenuToggleButton"
+                        AutomationProperties.Name="HamburgerToggleButton"
+                        IsChecked="{Binding IsLeftDrawerOpen}"
+                        Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                </StackPanel>
+                <TextBlock
+                    Margin="16,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="**测试系统" />
+            </DockPanel>
+        </materialDesign:ColorZone>
+        <materialDesign:DrawerHost
+            x:Name="DrawerHost"
+            Grid.Row="1"
+            Margin="0"
+            IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel
+                    Width="200"
+                    Margin="0"
+                    Orientation="Vertical">
                     <Button
                         Command="{Binding NavigateCommand}"
                         CommandParameter="SystemRoleView"
@@ -89,33 +100,11 @@
                         Content="用户" />
                     <Button
                         Command="{Binding NavigateCommand}"
-                        CommandParameter="TestView2"
+                        CommandParameter="TestView"
                         Content="业务测试" />
-
                 </StackPanel>
-                <TextBlock
-                    Margin="16,0,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="**测试系统" />
-            </DockPanel>
-
-        </materialDesign:ColorZone>
-        <!--<StackPanel Orientation="Horizontal">
-            <Button
-                Command="{Binding NavigateCommand}"
-                CommandParameter="SystemRoleView"
-                Content="角色" />
-            <Button
-                Command="{Binding NavigateCommand}"
-                CommandParameter="SystemUserView"
-                Content="用户" />
-            <Button
-                Command="{Binding NavigateCommand}"
-                CommandParameter="TestView2"
-                Content="业务测试" />
-        </StackPanel>-->
-
-        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <ContentControl prism:RegionManager.RegionName="{x:Static extensions:PrismManager.MainViewRegionName}" />
+        </materialDesign:DrawerHost>
     </Grid>
 </Window>
