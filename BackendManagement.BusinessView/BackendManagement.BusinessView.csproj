@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="8.1.97" />
+    <PackageReference Include="ScottPlot.WPF" Version="5.0.26" />
   </ItemGroup>
 
 </Project>
