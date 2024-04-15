@@ -24,6 +24,7 @@ namespace BackendManagement.CommonView
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
             containerRegistry.RegisterForNavigation<SystemRoleView, SystemRoleViewModel>();
             containerRegistry.RegisterForNavigation<SystemUserView, SystemUserViewModel>();
+            containerRegistry.RegisterForNavigation<SettingView, SettingViewModel>();
         }
     }
 }
