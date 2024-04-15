@@ -4,6 +4,7 @@ using BackendManagement.Services;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Services.Dialogs;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -32,12 +33,22 @@ namespace BackendManagement
 
         protected override void OnInitialized()
         {
-            var service= App.Current.MainWindow.DataContext as IConfigWindow;
-            if(service != null)
+            var dialog = Container.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView", callback =>
             {
-                service.InitWindow();
-            }
-            base.OnInitialized();
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+
+                var service = App.Current.MainWindow.DataContext as IConfigWindow;
+                if (service != null)
+                {
+                    service.InitWindow();
+                }
+                base.OnInitialized();
+            });
         }
 
         /// <summary>

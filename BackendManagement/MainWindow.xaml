@@ -26,7 +26,6 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="DockPanel.Dock" Value="Right" />
         </Style>
     </Window.Resources>
     <Grid>
@@ -43,42 +42,46 @@
                     <i:InvokeCommandAction Command="{Binding WindowMaximizeCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <DockPanel>
-                <materialDesign:PackIcon Kind="WindowClose" Style="{StaticResource packIconStyle}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding WindowCloseCommand}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </materialDesign:PackIcon>
-
-                <materialDesign:PackIcon Kind="WindowMaximize" Style="{StaticResource packIconStyle}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding WindowMaximizeCommand}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </materialDesign:PackIcon>
-                <materialDesign:PackIcon Kind="WindowMinimize" Style="{StaticResource packIconStyle}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding WindowMinimizeCommand}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </materialDesign:PackIcon>
-                <StackPanel Orientation="Horizontal">
+            <Grid>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="土壤质量测试系统" />
+                <DockPanel>
                     <ToggleButton
                         x:Name="MenuToggleButton"
                         AutomationProperties.Name="HamburgerToggleButton"
+                        DockPanel.Dock="Left"
                         IsChecked="{Binding IsLeftDrawerOpen}"
                         Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
-                </StackPanel>
-                <TextBlock
-                    Margin="16,0,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="**测试系统" />
-            </DockPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="WindowMinimize" Style="{StaticResource packIconStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding WindowMinimizeCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </materialDesign:PackIcon>
+                        <materialDesign:PackIcon Kind="WindowMaximize" Style="{StaticResource packIconStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding WindowMaximizeCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </materialDesign:PackIcon>
+                        <materialDesign:PackIcon Kind="WindowClose" Style="{StaticResource packIconStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding WindowCloseCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </materialDesign:PackIcon>
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
         </materialDesign:ColorZone>
         <materialDesign:DrawerHost
             x:Name="DrawerHost"
@@ -89,6 +92,7 @@
                 <StackPanel
                     Width="200"
                     Margin="0"
+                    Background="Transparent"
                     Orientation="Vertical">
                     <Button
                         Command="{Binding NavigateCommand}"

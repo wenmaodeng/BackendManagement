@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using BackendManagement.CommonView.ViewModels;
+using BackendManagement.CommonView.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using System;
 using System.Collections.Generic;
@@ -18,8 +20,10 @@ namespace BackendManagement.CommonView
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<Views.SystemRoleView>();
-            containerRegistry.RegisterForNavigation<Views.SystemUserView>();
+            containerRegistry.RegisterDialog<AddAndEditUserView, AddAndEditUserViewModel>();
+            containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<SystemRoleView, SystemRoleViewModel>();
+            containerRegistry.RegisterForNavigation<SystemUserView, SystemUserViewModel>();
         }
     }
 }
