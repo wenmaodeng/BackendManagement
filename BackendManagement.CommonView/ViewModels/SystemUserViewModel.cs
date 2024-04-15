@@ -3,6 +3,7 @@ using BackendManagement.Model;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace BackendManagement.CommonView.ViewModels
 {
-    public class SystemUserViewModel: BindableBase
+    public class SystemUserViewModel: BindableBase, IConfirmNavigationRequest
     {
+        private IFreeSql? freeSql = null;
         private SystemUser? _systemUser;
         public SystemUser? systemUser
         {
@@ -31,10 +33,39 @@ namespace BackendManagement.CommonView.ViewModels
         }
         private void AddAndEditUser(SystemUser? user = null)
         {
-            dialogService.ShowDialog(nameof(AddAndEditUserView), callback =>
+            DialogParameters keyValuePairs = new DialogParameters
+            {
+                {typeof(IFreeSql).Name,freeSql},
+                {nameof(SystemUser),user}
+            };
+
+            dialogService.ShowDialog(nameof(AddAndEditUserView), keyValuePairs, callback =>
             {
 
             });
+        }
+
+        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+        {
+            
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (freeSql == null && navigationContext.Parameters.ContainsKey(typeof(IFreeSql).Name))
+            {
+                freeSql = navigationContext.Parameters.GetValue<IFreeSql>(typeof(IFreeSql).Name);
+            }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
         }
     }
 }

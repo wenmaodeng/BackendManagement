@@ -4,11 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:BackendManagement"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:prism="http://prismlibrary.com/">
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         <ResourceDictionary>
+            <sys:Double x:Key="loginWindowWidth">350</sys:Double>
+            <sys:Double x:Key="loginWindowHeight">250</sys:Double>
+            <sys:Double x:Key="addAndEditUserViewWindowWidth">800</sys:Double>
+            <sys:Double x:Key="addAndEditUserViewWindowHeight">600</sys:Double>
+            <sys:Double x:Key="loginPackIconSize">24</sys:Double>
+            <Style x:Key="dialogWindow" TargetType="Window">
+                <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                <Setter Property="ResizeMode" Value="NoResize" />
+                <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+                <Setter Property="WindowStyle" Value="None" />
+            </Style>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="DeepPurple"
+                    SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

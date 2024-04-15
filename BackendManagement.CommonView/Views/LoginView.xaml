@@ -4,27 +4,83 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BackendManagement.CommonView.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    Width="400"
-    Height="300"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    Width="{StaticResource loginWindowWidth}"
+    Height="{StaticResource loginWindowHeight}"
+    d:DesignHeight="{StaticResource loginWindowHeight}"
+    d:DesignWidth="{StaticResource loginWindowWidth}"
     mc:Ignorable="d">
-    <UserControl.Resources />
-
-
+    <UserControl.Resources>
+        <Style TargetType="materialDesign:PackIcon">
+            <Setter Property="Width" Value="{StaticResource loginPackIconSize}" />
+            <Setter Property="Height" Value="{StaticResource loginPackIconSize}" />
+        </Style>
+    </UserControl.Resources>
     <prism:Dialog.WindowStyle>
-        <Style TargetType="Window">
-            <Setter Property="Width" Value="400" />
-            <Setter Property="Height" Value="300" />
-            <Setter Property="SizeToContent" Value="WidthAndHeight" />
-            <Setter Property="ResizeMode" Value="NoResize" />
-            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
-            <Setter Property="WindowStyle" Value="None" />
+        <Style BasedOn="{StaticResource dialogWindow}" TargetType="Window">
+            <Setter Property="Width" Value="{StaticResource loginWindowWidth}" />
+            <Setter Property="Height" Value="{StaticResource loginWindowHeight}" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid>
-        <Button Content="登录" />
+    <Grid Margin="40,15">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+
+        <TextBox
+            Grid.Row="0"
+            Margin="0"
+            VerticalAlignment="Center"
+            materialDesign:HintAssist.Hint="账号"
+            Style="{StaticResource MaterialDesignFilledTextBox}" />
+        <PasswordBox
+            Grid.Row="1"
+            Margin="0"
+            VerticalAlignment="Center"
+            materialDesign:HintAssist.Hint="密码"
+            materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
+            materialDesign:TextFieldAssist.HasClearButton="True"
+            IsEnabled="{Binding ElementName=RevealPasswordFloatingEnabled, Path=IsChecked}"
+            Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" />
+
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Margin="8,0,0,0"
+                Command="{Binding LoginCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                ToolTip="登录">
+                <materialDesign:PackIcon Kind="Login" />
+            </Button>
+            <Button
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                Command="{Binding RegisterCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                ToolTip="注册">
+                <materialDesign:PackIcon Kind="AccountPlus" />
+            </Button>
+            <Button
+                Grid.Column="2"
+                Margin="8,0,0,0"
+                Command="{Binding CancelCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+                ToolTip="取消">
+                <materialDesign:PackIcon Kind="Cancel" />
+            </Button>
+        </Grid>
+
+
     </Grid>
 </UserControl>

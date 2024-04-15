@@ -36,18 +36,24 @@ namespace BackendManagement
             var dialog = Container.Resolve<IDialogService>();
             dialog.ShowDialog("LoginView", callback =>
             {
-                if (callback.Result != ButtonResult.OK)
+                switch (callback.Result)
                 {
-                    Environment.Exit(0);
-                    return;
+                    case ButtonResult.OK:
+                        IConfigWindow? service = App.Current.MainWindow.DataContext as IConfigWindow;
+                        if (service != null)
+                        {
+                            service.InitWindow();
+                        }
+                        base.OnInitialized();
+                        break;
+                    case ButtonResult.Ignore:
+                        //跳转注册界面
+                        break;
+                    case ButtonResult.Cancel:
+                    default:
+                        Environment.Exit(0);
+                        return;
                 }
-
-                var service = App.Current.MainWindow.DataContext as IConfigWindow;
-                if (service != null)
-                {
-                    service.InitWindow();
-                }
-                base.OnInitialized();
             });
         }
 

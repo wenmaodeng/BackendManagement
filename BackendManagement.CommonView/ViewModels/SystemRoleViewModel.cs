@@ -15,7 +15,6 @@ namespace BackendManagement.CommonView.ViewModels
         private IFreeSql? freeSql = null;
         public SystemRoleViewModel() 
         {
-            Console.WriteLine("init SystemRoleViewModel");
         }
 
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
