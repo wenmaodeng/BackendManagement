@@ -47,7 +47,7 @@ namespace BackendManagement.CommonView.ViewModels
 
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
         {
-            
+            continuationCallback(true);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
