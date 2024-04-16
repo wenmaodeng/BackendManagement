@@ -13,8 +13,9 @@ namespace BackendManagement.CommonView.ViewModels
     public class SystemRoleViewModel: BindableBase,IConfirmNavigationRequest
     {
         private IFreeSql? freeSql = null;
-        public SystemRoleViewModel() 
+        public SystemRoleViewModel(IFreeSql? _freeSql) 
         {
+            freeSql = _freeSql;
         }
 
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
@@ -40,10 +41,7 @@ namespace BackendManagement.CommonView.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if (freeSql == null && navigationContext.Parameters.ContainsKey(typeof(IFreeSql).Name))
-            {
-                freeSql = navigationContext.Parameters.GetValue<IFreeSql>(typeof(IFreeSql).Name);
-            }
+
         }
     }
 }

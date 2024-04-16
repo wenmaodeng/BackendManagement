@@ -17,9 +17,12 @@
             <converters:ColorToBrushConverter x:Key="colorToBrushConverter" />
             <DataTemplate x:Key="SwatchColorTemplate" DataType="{x:Type Color}">
                 <Button
+                    x:Name="colorButton"
                     Width="40"
                     Height="40"
-                    Background="{Binding Converter={StaticResource colorToBrushConverter}}" />
+                    Background="{Binding Converter={StaticResource colorToBrushConverter}}"
+                    Command="{Binding DataContext.SetPrimaryColorCommand, RelativeSource={RelativeSource AncestorType=local:SettingView}}"
+                    CommandParameter="{Binding}" />
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>

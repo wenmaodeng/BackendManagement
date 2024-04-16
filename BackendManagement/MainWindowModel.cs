@@ -16,7 +16,7 @@ using System.Xml.Linq;
 
 namespace BackendManagement
 {
-    public class MainWindowModel:BindableBase, IConfigWindow
+    public class MainWindowModel : BindableBase, IConfigWindow
     {
         private string? systemName;
         public string? SystemName
@@ -31,9 +31,6 @@ namespace BackendManagement
             get => isLeftDrawerOpen;
             set => SetProperty(ref isLeftDrawerOpen, value);
         }
-
-
-
         public DelegateCommand<string>? NavigateCommand { get; private set; }
         public DelegateCommand? WindowMaximizeCommand { get; private set; }
         public DelegateCommand? WindowMinimizeCommand { get; private set; }
@@ -41,26 +38,21 @@ namespace BackendManagement
 
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator aggregator;
-        private readonly IFreeSql freeSql;
-        public MainWindowModel(IRegionManager _regionManager, IEventAggregator _aggregator, IFreeSql _freeSql)
+        private readonly IFreeSql? freeSql = null;
+        public MainWindowModel(IRegionManager _regionManager, IEventAggregator _aggregator, IFreeSql? _freeSql)
         {
             regionManager = _regionManager;
             aggregator = _aggregator;
             freeSql = _freeSql;
             NavigateCommand = new DelegateCommand<string>(Navigate);
             WindowMaximizeCommand = new DelegateCommand(WindowMaximize);
-            WindowMinimizeCommand=new DelegateCommand(WindowMinimize);
-            WindowCloseCommand=new DelegateCommand(WindowClose);
-            
+            WindowMinimizeCommand = new DelegateCommand(WindowMinimize);
+            WindowCloseCommand = new DelegateCommand(WindowClose);
+
         }
         private void Navigate(string nameSpace)
         {
-            NavigationParameters keyValuePairs = new NavigationParameters
-            {
-                { typeof(IFreeSql).Name , freeSql }
-            };
-
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(nameSpace, keyValuePairs);
+            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(nameSpace);
             IsLeftDrawerOpen = false;
         }
         private void WindowMaximize()

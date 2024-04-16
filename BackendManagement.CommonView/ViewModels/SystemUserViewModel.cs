@@ -25,8 +25,9 @@ namespace BackendManagement.CommonView.ViewModels
         public DelegateCommand<SystemUser>? AddUserCommand { get; private set; }
         public DelegateCommand<SystemUser>? EditUserCommand { get; private set; }
         private readonly IDialogService dialogService;
-        public SystemUserViewModel(IDialogService _dialogService) 
+        public SystemUserViewModel(IDialogService _dialogService, IFreeSql? _freeSql) 
         {
+            freeSql = _freeSql;
             dialogService = _dialogService;
             AddUserCommand = new DelegateCommand<SystemUser>(AddAndEditUser);
             EditUserCommand = new DelegateCommand<SystemUser>(AddAndEditUser);
@@ -52,10 +53,7 @@ namespace BackendManagement.CommonView.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if (freeSql == null && navigationContext.Parameters.ContainsKey(typeof(IFreeSql).Name))
-            {
-                freeSql = navigationContext.Parameters.GetValue<IFreeSql>(typeof(IFreeSql).Name);
-            }
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

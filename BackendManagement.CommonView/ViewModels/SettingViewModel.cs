@@ -1,6 +1,7 @@
 ﻿using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Prism.Commands;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,14 @@ using System.Windows.Media;
 
 namespace BackendManagement.CommonView.ViewModels
 {
-    public class SettingViewModel
+    public class SettingViewModel : BindableBase
     {
         private readonly PaletteHelper _paletteHelper = new();
         private readonly Theme? theme = null;
         public IEnumerable<ISwatch> Swatches { get; } = SwatchHelper.Swatches;
         public DelegateCommand? LightCommand { get; private set; }
         public DelegateCommand? DarkCommand { get; private set; }
-        public DelegateCommand<Color?>? SetPrimaryColorCommand { get; private set; }
+        public DelegateCommand<object> SetPrimaryColorCommand { get; private set; }
         public DelegateCommand<Color?>? SetSecondaryColorCommand { get; private set; }
         public SettingViewModel()
         {
@@ -27,7 +28,7 @@ namespace BackendManagement.CommonView.ViewModels
             }
             LightCommand = new DelegateCommand(() => ApplyBase(false));
             DarkCommand = new DelegateCommand(() => ApplyBase(true));
-            SetPrimaryColorCommand = new DelegateCommand<Color?>(SetPrimaryColor);
+            SetPrimaryColorCommand = new DelegateCommand<object>(SetPrimaryColor);
             SetSecondaryColorCommand = new DelegateCommand<Color?>(SetSecondaryColor);
         }
         private void ApplyBase(bool isDark)
@@ -39,14 +40,21 @@ namespace BackendManagement.CommonView.ViewModels
             }
 
         }
-        private void SetPrimaryColor(Color? color)
+        private void SetPrimaryColor(object obj)
         {
-            if (color != null)
-                theme?.SetPrimaryColor((Color)color);
+            if (obj == null)
+                return;
+            var color = (Color)obj;
+            if(theme!=null)
+            {
+                theme.SetPrimaryColor((Color)color);
+                _paletteHelper.SetTheme(theme);
+            }
         }
         private void SetSecondaryColor(Color? color)
         {
             if (color != null)
+
                 theme?.SetSecondaryColor((Color)color);
         }
     }
